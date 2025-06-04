@@ -1,0 +1,80 @@
+@media (prefers-color-scheme: dark) {
+  body {
+    background: linear-gradient(135deg, #2d1856 0%, #1b1b1b 100%);
+    color: #e0e0e0;
+  }
+  .container {
+    background-color: #1b1b1b;
+    color: #e0e0e0;
+    box-shadow: 0 8px 32px rgba(187,134,252,0.10);
+  }
+  p {
+    color: #fcdeff;
+  }
+  h1 {
+    color: #bb86fc;
+    text-shadow: 0 2px 8px rgba(187, 134, 252, 0.5);
+  }
+  .features li,
+  ul li {
+    background: #2c2c2c;
+    color: #bb86fc;
+    box-shadow: 0 2px 8px rgba(187, 134, 252, 0.1);
+  }
+  .links a,
+  a.back, .sign {
+    background: #bb86fc;
+    color: #1b1b1b;
+    box-shadow: 0 2px 8px rgba(187, 134, 252, 0.10);
+  }
+  .links a:hover,
+  a.back:hover, .sign:hover {
+    background: #6a1b9a;
+    color: #fff;
+  }
+  .logo,
+  .logo-topleft {
+    background: #2c2c2c;
+    box-shadow: 0 2px 12px rgba(187,134,252,0.10);
+  }
+  .profile .avatar,
+  .avatar {
+    border-color: #bb86fc;
+    background: #2c2c2c;
+  }
+  .username {
+    background: #2c2c2c;
+    color: #bb86fc;
+    box-shadow: 0 1px 4px rgba(187,134,252,0.07);
+  }
+  label {
+    color: #bb86fc;
+  }
+  input,
+  select {
+    background: #232323;
+    color: #e0e0e0;
+    border: 1px solid #444;
+  }
+  input:focus,
+  select:focus {
+    border: 1.5px solid #bb86fc;
+  }
+  button {
+    background: #bb86fc;
+    color: #1b1b1b;
+  }
+  button:hover {
+    background: #6a1b9a;
+    color: #fff;
+  }
+  .fade-in {
+    color: #e0e0e0;
+  }
+  a {
+    color: #bb86fc;
+  }
+  a:hover {
+    color: #fff;
+  }
+}
