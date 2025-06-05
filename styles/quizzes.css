@@ -111,7 +111,6 @@ ul {
     box-shadow: 0 2px 8px rgba(138,43,226,0.10);
     transition: background 0.2s, transform 0.2s;
     letter-spacing: 0.5px;
-    margin-bottom: 6px;
     display: block;
 }
 

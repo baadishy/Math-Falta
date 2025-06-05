@@ -21,14 +21,17 @@
     color: #bb86fc;
     box-shadow: 0 2px 8px rgba(187, 134, 252, 0.1);
   }
+  ul li {
+    background: transparent;
+  }
   .links a,
-  a.back, .sign {
+  a.back {
     background: #bb86fc;
     color: #1b1b1b;
     box-shadow: 0 2px 8px rgba(187, 134, 252, 0.10);
   }
   .links a:hover,
-  a.back:hover, .sign:hover {
+  a.back:hover {
     background: #6a1b9a;
     color: #fff;
   }
