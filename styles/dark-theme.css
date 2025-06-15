@@ -80,4 +80,17 @@
   a:hover {
     color: #fff;
   }
+  /* groups styles*/
+  .group-list > li {
+    background-color: #232323 !important;
+  }
+  h2.group-name {
+    background-color: #444;
+    color: #bb86fc;
+    text-shadow: 0 2px 8px rgba(187, 134, 252, 0.5);
+  }
+  ul.group-content li {
+    background-color: #2c2c2c !important;
+    color: #fff;
+  }
 }
