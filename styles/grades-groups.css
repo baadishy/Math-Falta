@@ -86,7 +86,8 @@ body {
 }
 
 .container {
-    max-width: 520px;
+    max-width: 780px;
+    width: calc(100% - 100px);
     margin: 48px auto;
     background: #fff;
     border-radius: 22px;
@@ -208,6 +209,7 @@ ul.group-list li {
     padding: 0 0 0 10px;
     color: #3b2f63;
     font-size: 1.07em;
+    font-weight: bold;
 }
 
 .group-content li {
