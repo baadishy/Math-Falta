@@ -4,6 +4,7 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  font-size: 1.05rem; /* Base font size for the page */
 }
 
 .links {
@@ -20,7 +21,7 @@ body {
   padding: 12px 0;
   text-align: center;
   border-radius: 8px;
-  font-size: 1.1em;
+  font-size: 1em; /* Slightly smaller for buttons/links */
   font-weight: bold;
   box-shadow: 0 2px 8px rgba(138, 43, 226, 0.1);
   transition: background 0.2s, transform 0.2s;
@@ -77,7 +78,7 @@ body {
 .username {
   color: #6a1b9a;
   font-weight: bold;
-  font-size: 1.1em;
+  font-size: 1em;
   background: #f3eaff;
   padding: 4px 16px;
   border-radius: 12px;
@@ -85,8 +86,7 @@ body {
 }
 
 .container {
-  max-width: 780px;
-  width: calc(100% - 100px);
+  width: auto;
   margin: 48px auto;
   background: #fff;
   border-radius: 22px;
@@ -110,7 +110,7 @@ body {
 h1 {
   color: #7c3aed;
   text-align: center;
-  font-size: 2.2em;
+  font-size: 2em; /* Slightly smaller for better fit */
   margin-bottom: 32px;
   letter-spacing: 1.5px;
   text-shadow: 2px 3px 0 #c7d2fe, 0 1px 0 #fff;
@@ -131,7 +131,7 @@ li a {
   text-decoration: none;
   padding: 12px 0;
   border-radius: 8px;
-  font-size: 1.1em;
+  font-size: 1em; /* Slightly smaller for buttons/links */
   font-weight: bold;
   box-shadow: 0 2px 8px rgba(138, 43, 226, 0.1);
   transition: background 0.2s, transform 0.2s;
@@ -174,7 +174,7 @@ ul li a {
 .username {
   color: #6a1b9a;
   font-weight: bold;
-  font-size: 1.1em;
+  font-size: 1em;
   background: #f3eaff;
   padding: 4px 16px;
   border-radius: 12px;
@@ -196,7 +196,7 @@ ul.group-list li {
 }
 
 .group-name {
-  font-size: 1.25em;
+  font-size: 1.5em; /* Was 40px, now relative and responsive */
   color: #7c3aed;
   background: #f3e8ff;
   padding: 8px 20px;
@@ -215,7 +215,7 @@ ul.group-list li {
   margin: 10px 0 0 0;
   padding: 0 0 0 10px;
   color: #3b2f63;
-  font-size: 1.07em;
+  font-size: 1.15em; /* Was 27px, now relative */
   font-weight: bold;
 }
 
@@ -243,44 +243,35 @@ ul.group-list li {
   }
 }
 
+/* Responsive adjustments
 @media (max-width: 700px) {
-  .container {
-    padding: 24px 10px 20px 10px;
-    border-radius: 16px;
-    max-width: 98vw;
-  }
-  .features li,
-  .features ul li {
-    width: 98%;
-    min-width: unset;
-    font-size: 1em;
-    padding: 8px 0;
-  }
   h1 {
-    font-size: 1.5em;
+    font-size: 1.3em;
   }
-  .logo,
-  .logo-topleft {
-    width: 54px;
-    height: 54px;
-    top: 10px;
-    left: 10px;
+  .group-name {
+    font-size: 1.1em;
+  }
+  .group-content {
+    font-size: 1em;
+  }
+  .links a,
+  li a {
+    font-size: 0.95em;
   }
 }
 
 @media (max-width: 400px) {
-  .container {
-    padding: 10px 2vw;
-    border-radius: 10px;
-  }
   h1 {
-    font-size: 1.1em;
+    font-size: 1em;
   }
-  .logo,
-  .logo-topleft {
-    width: 40px;
-    height: 40px;
-    top: 4px;
-    left: 4px;
+  .group-name {
+    font-size: 0.95em;
   }
-}
+  .group-content {
+    font-size: 0.9em;
+  }
+  .links a,
+  li a {
+    font-size: 0.9em;
+  }
+} */

@@ -40,6 +40,11 @@ body {
     padding: 4px 16px;
     border-radius: 12px;
     box-shadow: 0 1px 4px rgba(138,43,226,0.07);
+    margin-top: 20px;
+    white-space: nowrap;
+}
+.profile a {
+    display: none;
 }
 
 .container {
@@ -102,4 +107,12 @@ h1 {
 .links a:hover {
     background: #6a1b9a;
     transform: translateY(-3px) scale(1.04);
+}
+@media (min-width: 720px) {
+    .profile a {
+        display: inherit;
+    }
+    .username {
+        margin-top: auto
+    }
 }
