@@ -25,16 +25,26 @@ function showText(part) {
         setTimeout(() => {
           text.remove();
         }, 1000);
-      }, 10000);
+      }, 15000);
     }, 10);
   }
   return part
 }
 
-let homeText = `Hello, I am Hamada your AI assistant here,
-If you want any thing just click me. This is the Home page, From here you can go to the quizzez or the groups or you can log out, If you want to go back to main page just click the logo at the topleft corner`;
-let quizzezText = `Hello, Please choose your grade to start the quizzez.`;
-let groupsText = `Hello, Please choose your grade to see your grade groups`;
+let homeText = `👋 Hi there! I'm Hamada, your fun AI buddy 🤖  
+Need anything? Just click me! 🖱️  
+🏡 This is the Home Page — from here, you can jump to quizzes 🧠, explore your groups 👨‍👩‍👧‍👦, or log out 🚪  
+🎯 To go back to where we started anytime, click the logo at the top-left corner 🔙`;
+
+
+let groupsText = `👋 Hello! Ready to join your friends?  
+Pick your grade 🎓 to see your awesome groups 👯‍♂️👯‍♀️`;
+
+
+let quizzezText = `🧠 Time to test your brain power!  
+Please choose your grade 📚 to start the quizzes 🎉`;
+
+
 let helperText = location.href.includes("landing")
   ? homeText
   : location.href.includes("groups")
@@ -51,7 +61,7 @@ function addText(part) {
     window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "#2c2c2c"
       : "#f3eaff"
-  }; max-width: 300px; margin-left: 20px; padding: 20px; border-radius: 20px; transition: all 1s ease-out;`;
+  }; max-width: 300px; margin-left: 20px; padding: 20px; border-radius: 20px; transition: all 1s ease-out; overflow-y: auto; margin-bottom: 20px;`;
   text.style.transform = "scale(0)";
   return text;
 }
