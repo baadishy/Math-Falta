@@ -15,7 +15,7 @@ window.onload = function () {
 function showText(part) {
   if (!helper.querySelector(".helper-text")) {
     part++
-    if (helperText.split('.').length < part) return part
+    if (helperText.split('||').length < part) return part
     console.log(part)
     let text = addText(part);
     setTimeout(() => {
@@ -32,8 +32,7 @@ function showText(part) {
 }
 
 let homeText = `👋 Hi there! I'm Hamada, your fun AI buddy 🤖  
-Need anything? Just click me! 🖱️  
-🏡 This is the Home Page — from here, you can jump to quizzes 🧠, explore your groups 👨‍👩‍👧‍👦, or log out 🚪  
+Need anything? Just click me! 🖱️ || 🏡 This is the Home Page — from here, you can jump to quizzes 🧠, explore your groups 👨‍👩‍👧‍👦, or log out 🚪  
 🎯 To go back to where we started anytime, click the logo at the top-left corner 🔙`;
 
 
@@ -53,7 +52,7 @@ let helperText = location.href.includes("landing")
 
 function addText(part) {
   let text = document.createElement("div");
-  text.textContent = helperText.split(".")[part - 1];
+  text.textContent = helperText.split("||")[part - 1];
   text.className = "helper-text";
   helper.append(text);
   text.style.cssText = `background-color: ${

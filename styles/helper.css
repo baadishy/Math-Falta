@@ -5,17 +5,17 @@
   height: 100px;
   margin-left: auto;
   margin-right: auto;
-	position: fixed;
-	bottom: 30px;
-	left: 30px;
-	visibility: hidden;
-	opacity: 0;
-	transform: translateX(-20px);
-	transition: transform 1s ease-out, opacity .4s ease-out;
-
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: transform 1s ease-out, opacity 0.4s ease-out;
+  margin-right: 20px;
 }
 body {
-	padding-bottom: 100px
+  padding-bottom: 80px !important;
 }
 /* @keyframes bounce {
   0% {
@@ -49,16 +49,15 @@ body {
 .helper-text {
   max-height: 100px;
 }
-@media (max-width: 425px) {
-	.helper img {
-		width: 80px;
-		height: 80px;
-	}
-	.helper-text {
-		font-size: 14px;
-		margin-right: 20px;
-	}
-	.helper {
-		left: 10px;
-	}
+@media (max-width: 500px) {
+  .helper img {
+    width: 80px;
+    height: 80px;
+  }
+  .helper-text {
+    font-size: 14px;
+  }
+  .helper {
+    left: 10px;
+  }
 }
