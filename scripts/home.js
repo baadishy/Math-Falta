@@ -15,3 +15,4 @@ if (localStorage.getItem('theUser')) {
   startBtn.href = './landing.html'
   signUpBtn.after(startBtn)
 } 
+
