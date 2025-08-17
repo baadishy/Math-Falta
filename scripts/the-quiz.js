@@ -20,7 +20,7 @@ let quizzes = [
       topic: "Whole Numbers",
       question: "The value of digit 6 in 46,528 is:",
       options: ["6", "60", "600", "6,000"],
-      answer: "600",
+      answer: "6,000",
     },
     {
       id: 3,
@@ -46,6 +46,7 @@ let quizzes = [
       options: ["7,000", "7,700", "8,000", "7,600"],
       answer: "8,000",
     },
+
     // 🟦 Fractions & Decimals
     {
       id: 6,
@@ -53,7 +54,7 @@ let quizzes = [
       topic: "Fractions & Decimals",
       question: "Simplify the fraction 18/24.",
       options: ["2/3", "3/4", "4/6", "5/8"],
-      answer: "2/3",
+      answer: "3/4",
     },
     {
       id: 7,
@@ -68,7 +69,7 @@ let quizzes = [
       grade: 5,
       topic: "Fractions & Decimals",
       question: "Which fraction is greater? 5/8 or 3/4.",
-      options: ["5/8", "3/4"],
+      options: ["5/8", "3/4", "2/3", "7/10"],
       answer: "3/4",
     },
     {
@@ -110,7 +111,7 @@ let quizzes = [
       grade: 5,
       topic: "Factors & Multiples",
       question: "Is 97 a prime or composite number?",
-      options: ["Prime", "Composite"],
+      options: ["Prime", "Composite", "Even", "Odd"],
       answer: "Prime",
     },
     {
@@ -173,7 +174,6 @@ let quizzes = [
       options: ["180°", "270°", "360°", "540°"],
       answer: "360°",
     },
-
     {
       id: 21,
       grade: 5,
@@ -202,7 +202,7 @@ let quizzes = [
     {
       id: 24,
       grade: 5,
-      topic: "Measurement",
+      topic: "Geometry",
       question:
         "A rectangle has area 45 cm² and length 9 cm. What is its width?",
       options: ["4 cm", "5 cm", "6 cm", "7 cm"],
@@ -211,7 +211,7 @@ let quizzes = [
     {
       id: 25,
       grade: 5,
-      topic: "Measurement",
+      topic: "Geometry",
       question: "The perimeter of a square is 40 cm. Find its side length.",
       options: ["8 cm", "10 cm", "12 cm", "16 cm"],
       answer: "10 cm",
@@ -263,36 +263,108 @@ let quizzes = [
     },
   ],
 ];
+
 let [grade5Quizzes] = quizzes;
+let theUser = JSON.parse(localStorage.theUser);
+theUser.quizzes = JSON.parse(localStorage.theUser).quizzes || []
+let wh = grade5Quizzes.filter((quiz) => quiz.topic === "Whole Numbers");
+let fr = grade5Quizzes.filter((quiz) => quiz.topic === "Fractions & Decimals");
+let famu = grade5Quizzes.filter((quiz) => quiz.topic === "Factors & Multiples");
+let geo = grade5Quizzes.filter((quiz) => quiz.topic === "Geometry");
+let da = grade5Quizzes.filter((quiz) => quiz.topic === "Data & Statistics");
 
 document.querySelector(".links a").onclick = function () {
   history.back();
 };
 
-window.onload = function() {
-  localStorage.removeItem('theAnswer')
-}
+window.onload = function () {
+  localStorage.removeItem("theAnswer");
+};
 
 let theQuestionPart = document.querySelector(".question strong");
 let theChoicesPart = document.querySelector(".choices");
 
 let part = 0;
-theQuestionPart.textContent = grade5Quizzes[part].question;
-theChoicesPart.querySelector("button:nth-child(1)").textContent =
-  grade5Quizzes[part].options[0];
-theChoicesPart.querySelector("button:nth-child(2)").textContent =
-  grade5Quizzes[part].options[1];
-theChoicesPart.querySelector("button:nth-child(3)").textContent =
-  grade5Quizzes[part].options[2];
-theChoicesPart.querySelector("button:nth-child(4)").textContent =
-  grade5Quizzes[part].options[3];
+let score = 0;
+
+if (localStorage["quiz-type"] === "Whole Numbers") {
+  part = 0;
+} else if (localStorage["quiz-type"] === "Fractions & Decimals") {
+  part = 5;
+} else if (localStorage["quiz-type"] === "Factors & Multiples") {
+  part = 10;
+} else if (localStorage["quiz-type"] === "Geometry") {
+  part = 15;
+} else if (localStorage["quiz-type"] === "Data & Statistics") {
+  part = 25;
+}
+showQuestion();
+function showQuestion() {
+  theQuestionPart.textContent = grade5Quizzes[part].question;
+  theChoicesPart.querySelector("button:nth-child(1)").textContent =
+    grade5Quizzes[part].options[0];
+  theChoicesPart.querySelector("button:nth-child(2)").textContent =
+    grade5Quizzes[part].options[1];
+  theChoicesPart.querySelector("button:nth-child(3)").textContent =
+    grade5Quizzes[part].options[2];
+  theChoicesPart.querySelector("button:nth-child(4)").textContent =
+    grade5Quizzes[part].options[3];
+}
+function changeQuestion() {
+  document.querySelector(".question-block").style.cssText =
+    "transform: translatex(-250%); transition: transform 1s ease-out;";
+  setTimeout(() => {
+    showQuestion();
+    document.querySelector(".question-block").style.cssText =
+      "transform: translatex(0);transition: all 1s ease-out;";
+    if (document.querySelector(".correct")) {
+      document.querySelector(".correct").classList.remove("correct");
+    }
+    if (document.querySelector(".incorrect")) {
+      document.querySelector(".incorrect").classList.remove("incorrect");
+    }
+    document.querySelectorAll(".choice").forEach((option) => {
+      option.classList.remove("choosen");
+      option.style.pointerEvents = "all";
+    });
+  }, 1000);
+}
+function showFinal() {
+  let theDoneQuizzes = grade5Quizzes.filter(
+    (quiz) => quiz.topic === localStorage["quiz-type"]
+  );
+  let theQuizzes = {
+    topic: localStorage.getItem("quiz-type"),
+    score: score,
+    doneQuizzes: theDoneQuizzes,
+  };
+  theUser.quizzes.push(theQuizzes);
+  localStorage.setItem("theUser", JSON.stringify(theUser));
+
+  document.querySelector(".question-block").style.cssText =
+    "transform: translatex(-250%);transition: all 1s ease-out;";
+  setTimeout(function () {
+    document.querySelector(".question-block").innerHTML = `
+      <h2>Quiz Finished!</h2>
+      <p>Your score: <strong>${theQuizzes.score} / ${theDoneQuizzes.length}</strong></p>
+    `;
+    document.querySelector(".question-block").style.cssText =
+      "transform: translatex(0);transition: all 1s ease-out;";
+  }, 1000);
+}
+
+// document.addEventListener('keyup',function(event) {
+//   if (event.key === 'Enter') {
+//     document.querySelector('.next-btn').click()
+//   }
+// })
 
 document.querySelectorAll(".choice").forEach((option) => {
   option.onclick = function (event) {
     document.querySelectorAll(".choice").forEach((option) => {
       option.classList.remove("choosen");
     });
-    option.classList.toggle("choosen");
+    option.classList.add("choosen");
     localStorage.setItem("theAnswer", event.target.textContent);
   };
 });
@@ -301,20 +373,39 @@ document.querySelector(".next-btn").onclick = function () {
   if (localStorage.theAnswer) {
     if (localStorage.theAnswer === grade5Quizzes[part].answer) {
       document.querySelector(".choosen").classList.add("correct");
+      score++;
     } else {
       document.querySelector(".choosen").classList.add("incorrect");
-      document.querySelectorAll('.choice').forEach(option => {
+      document.querySelectorAll(".choice").forEach((option) => {
         if (option.textContent === grade5Quizzes[part].answer) {
-          option.classList.add('correct')
+          option.classList.add("correct");
         }
-      })
+      });
     }
-    document.querySelectorAll('.choice').forEach(option => {
-      option.onclick = function(event) {
-        event.preventDefault()
+    let endIndex = 0;
+    if (localStorage["quiz-type"] === "Whole Numbers") {
+      endIndex = wh.length - 1;
+    } else if (localStorage["quiz-type"] === "Fractions & Decimals") {
+      endIndex = 5 + fr.length - 1;
+    } else if (localStorage["quiz-type"] === "Factors & Multiples") {
+      endIndex = 10 + famu.length - 1;
+    } else if (localStorage["quiz-type"] === "Geometry") {
+      endIndex = 15 + geo.length - 1;
+    } else if (localStorage["quiz-type"] === "Data & Statistics") {
+      endIndex = 25 + da.length - 1;
+    }
+    setTimeout(function () {
+      if (part === endIndex) {
+        showFinal();
+        return;
       }
-    })
+      part++;
+      changeQuestion();
+    }, 1500);
+    document.querySelectorAll(".choice").forEach((option) => {
+      option.style.pointerEvents = "none";
+    });
   } else {
-    alert('Please Choose An Answer')
+    alert("Please Choose An Answer");
   }
 };
