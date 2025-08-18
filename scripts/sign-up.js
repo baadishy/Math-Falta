@@ -8,7 +8,9 @@ let grade = form.grade;
 let invalid = document.createElement("span");
 invalid.append(document.createTextNode("This is invalid"));
 invalid.style.cssText = "color: red;";
-let users = JSON.parse(localStorage.getItem("users")) || [];
+let users = []
+if (localStorage.users !== 'undefined' && localStorage.users !== undefined) users = JSON.parse(localStorage.users)
+
 window.onload = function () {
   username.focus();
 };

@@ -26,6 +26,7 @@ if (location.href.includes("grade-5.html")) {
 
 let theUser = JSON.parse(localStorage.theUser);
 let options = document.querySelectorAll("ul li");
+
 for (let i = 0; i < theUser.quizzes.length; i++) {
   options.forEach(function (option) {
     if (option.textContent === theUser.quizzes[i].topic) {

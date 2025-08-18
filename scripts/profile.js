@@ -1,10 +1,31 @@
-let user = JSON.parse(localStorage.getItem('theUser'));
+let theUser = JSON.parse(localStorage.getItem("theUser"));
 
-let fields = document.getElementsByClassName('value')
+let fields = document.getElementsByClassName("value");
 
-fields[0].textContent = user.username
-fields[1].textContent = user.grade
-fields[2].textContent = user.parentNumber
-fields[3].textContent = user.email
-fields[4].textContent = user.password
+fields[0].textContent = theUser.username;
+fields[1].textContent = theUser.grade;
+fields[2].textContent = theUser.parentNumber;
+fields[3].textContent = theUser.email;
+fields[4].textContent = theUser.password;
 
+let quizzesPart = document.querySelector(".quizzes ul");
+
+if (theUser.quizzes) {
+  theUser.quizzes.forEach((quiz) => {
+    putQuiz(quiz);
+  });
+} else {
+  quizzesPart.append(document.createElement('li'))
+  quizzesPart.querySelector('li').textContent = 'No Quizzes'
+  quizzesPart.querySelector('li').style.pointerEvents = 'none'
+}
+
+function putQuiz(quiz) {
+  let li = document.createElement("li");
+  li.textContent = quiz.topic;
+  quizzesPart.append(li);
+  li.onclick = function () {
+    location.href = "../html/quiz-review.html";
+    localStorage.setItem("quiz-type", this.textContent);
+  };
+}

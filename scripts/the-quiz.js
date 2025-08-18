@@ -138,7 +138,7 @@ let quizzes = [
       topic: "Geometry",
       question: "A triangle has angles 40° and 65°. The third angle is:",
       options: ["55°", "65°", "75°", "85°"],
-      answer: "55°",
+      answer: "75°",
     },
     {
       id: 17,
@@ -265,13 +265,15 @@ let quizzes = [
 ];
 
 let [grade5Quizzes] = quizzes;
+let gradeQuizzes = grade5Quizzes;
 let theUser = JSON.parse(localStorage.theUser);
-theUser.quizzes = JSON.parse(localStorage.theUser).quizzes || []
-let wh = grade5Quizzes.filter((quiz) => quiz.topic === "Whole Numbers");
-let fr = grade5Quizzes.filter((quiz) => quiz.topic === "Fractions & Decimals");
-let famu = grade5Quizzes.filter((quiz) => quiz.topic === "Factors & Multiples");
-let geo = grade5Quizzes.filter((quiz) => quiz.topic === "Geometry");
-let da = grade5Quizzes.filter((quiz) => quiz.topic === "Data & Statistics");
+theUser.quizzes = JSON.parse(localStorage.theUser).quizzes || [];
+
+let wh = gradeQuizzes.filter((quiz) => quiz.topic === "Whole Numbers");
+let fr = gradeQuizzes.filter((quiz) => quiz.topic === "Fractions & Decimals");
+let famu = gradeQuizzes.filter((quiz) => quiz.topic === "Factors & Multiples");
+let geo = gradeQuizzes.filter((quiz) => quiz.topic === "Geometry");
+let da = gradeQuizzes.filter((quiz) => quiz.topic === "Data & Statistics");
 
 document.querySelector(".links a").onclick = function () {
   history.back();
@@ -286,6 +288,7 @@ let theChoicesPart = document.querySelector(".choices");
 
 let part = 0;
 let score = 0;
+let doneQuizzes = [];
 
 if (localStorage["quiz-type"] === "Whole Numbers") {
   part = 0;
@@ -300,15 +303,15 @@ if (localStorage["quiz-type"] === "Whole Numbers") {
 }
 showQuestion();
 function showQuestion() {
-  theQuestionPart.textContent = grade5Quizzes[part].question;
+  theQuestionPart.textContent = gradeQuizzes[part].question;
   theChoicesPart.querySelector("button:nth-child(1)").textContent =
-    grade5Quizzes[part].options[0];
+    gradeQuizzes[part].options[0];
   theChoicesPart.querySelector("button:nth-child(2)").textContent =
-    grade5Quizzes[part].options[1];
+    gradeQuizzes[part].options[1];
   theChoicesPart.querySelector("button:nth-child(3)").textContent =
-    grade5Quizzes[part].options[2];
+    gradeQuizzes[part].options[2];
   theChoicesPart.querySelector("button:nth-child(4)").textContent =
-    grade5Quizzes[part].options[3];
+    gradeQuizzes[part].options[3];
 }
 function changeQuestion() {
   document.querySelector(".question-block").style.cssText =
@@ -330,13 +333,10 @@ function changeQuestion() {
   }, 1000);
 }
 function showFinal() {
-  let theDoneQuizzes = grade5Quizzes.filter(
-    (quiz) => quiz.topic === localStorage["quiz-type"]
-  );
   let theQuizzes = {
     topic: localStorage.getItem("quiz-type"),
     score: score,
-    doneQuizzes: theDoneQuizzes,
+    doneQuizzes: JSON.parse(sessionStorage.doneQuizzes),
   };
   theUser.quizzes.push(theQuizzes);
   localStorage.setItem("theUser", JSON.stringify(theUser));
@@ -346,11 +346,18 @@ function showFinal() {
   setTimeout(function () {
     document.querySelector(".question-block").innerHTML = `
       <h2>Quiz Finished!</h2>
-      <p>Your score: <strong>${theQuizzes.score} / ${theDoneQuizzes.length}</strong></p>
+      <p>Your score: <strong>${theQuizzes.score} / ${JSON.parse(sessionStorage.doneQuizzes).length}</strong></p>
     `;
     document.querySelector(".question-block").style.cssText =
       "transform: translatex(0);transition: all 1s ease-out;";
   }, 1000);
+}
+function saveQuestion(correct) {
+  let theQuestion = gradeQuizzes[part];
+  theQuestion.isCorrect = correct;
+  theQuestion.userAnswer = localStorage.theAnswer
+  doneQuizzes.push(theQuestion);
+  sessionStorage.setItem("doneQuizzes", JSON.stringify(doneQuizzes));
 }
 
 // document.addEventListener('keyup',function(event) {
@@ -371,17 +378,20 @@ document.querySelectorAll(".choice").forEach((option) => {
 
 document.querySelector(".next-btn").onclick = function () {
   if (localStorage.theAnswer) {
-    if (localStorage.theAnswer === grade5Quizzes[part].answer) {
+    if (localStorage.theAnswer === gradeQuizzes[part].answer) {
       document.querySelector(".choosen").classList.add("correct");
       score++;
+      saveQuestion(true);
     } else {
       document.querySelector(".choosen").classList.add("incorrect");
       document.querySelectorAll(".choice").forEach((option) => {
-        if (option.textContent === grade5Quizzes[part].answer) {
+        if (option.textContent === gradeQuizzes[part].answer) {
           option.classList.add("correct");
         }
       });
+      saveQuestion(false);
     }
+    localStorage.removeItem('theAnswer')
     let endIndex = 0;
     if (localStorage["quiz-type"] === "Whole Numbers") {
       endIndex = wh.length - 1;
