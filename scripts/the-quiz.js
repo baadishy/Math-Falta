@@ -1387,14 +1387,36 @@ let quizzes = [
   ],
 ];
 
-let [grade5Quizzes, grade6Quizzes, grade7Quizzes, grade8Quizzes, grade9Quizzes, grade10Quizzes, grade11Quizzes] = quizzes;
-let gradeQuizzes = localStorage.grade === 'grade-5' ? grade5Quizzes : localStorage.grade === 'grade-6' ? grade6Quizzes : localStorage.grade === 'grade-7' ? grade7Quizzes : localStorage.grade === 'grade-8' ? grade8Quizzes : localStorage.grade === 'grade-9' ? grade9Quizzes : localStorage.grade === 'grade-10' ? grade10Quizzes : grade11Quizzes; 
+let [
+  grade5Quizzes,
+  grade6Quizzes,
+  grade7Quizzes,
+  grade8Quizzes,
+  grade9Quizzes,
+  grade10Quizzes,
+  grade11Quizzes,
+] = quizzes;
+let gradeQuizzes =
+  localStorage.grade === "grade-5"
+    ? grade5Quizzes
+    : localStorage.grade === "grade-6"
+    ? grade6Quizzes
+    : localStorage.grade === "grade-7"
+    ? grade7Quizzes
+    : localStorage.grade === "grade-8"
+    ? grade8Quizzes
+    : localStorage.grade === "grade-9"
+    ? grade9Quizzes
+    : localStorage.grade === "grade-10"
+    ? grade10Quizzes
+    : grade11Quizzes;
 let theUser = JSON.parse(localStorage.theUser);
-theUser.quizzes = JSON.parse(localStorage.theUser).quizzes || [];
+theUser.quizzes = []
 
-let filteredQuizzes = gradeQuizzes.filter(quiz => {
-  return quiz.topic === localStorage['quiz-type']
-})
+let filteredQuizzes = gradeQuizzes.filter((quiz) => {
+  return quiz.topic === localStorage["quiz-type"];
+});
+console.log(filteredQuizzes);
 
 // let wh = gradeQuizzes.filter((quiz) => quiz.topic === "Whole Numbers");
 // let fr = gradeQuizzes.filter((quiz) => quiz.topic === "Fractions & Decimals");
@@ -1403,6 +1425,8 @@ let filteredQuizzes = gradeQuizzes.filter(quiz => {
 // let da = gradeQuizzes.filter((quiz) => quiz.topic === "Data & Statistics");
 
 document.querySelector(".links a").onclick = function () {
+  sessionStorage.removeItem("doneQuizzes");
+  sessionStorage.removeItem("part");
   history.back();
 };
 
@@ -1413,22 +1437,17 @@ window.onload = function () {
 let theQuestionPart = document.querySelector(".question strong");
 let theChoicesPart = document.querySelector(".choices");
 
-let part = 0;
+let part = sessionStorage.part || 0;
 let score = 0;
-let doneQuizzes = [];
+let doneQuizzes =
+  sessionStorage.doneQuizzes === "undefined" ||
+  sessionStorage.doneQuizzes === undefined
+    ? []
+    : JSON.parse(sessionStorage.doneQuizzes);
 
-// if (localStorage["quiz-type"] === "Whole Numbers") {
-//   part = 0;
-// } else if (localStorage["quiz-type"] === "Fractions & Decimals") {
-//   part = 5;
-// } else if (localStorage["quiz-type"] === "Factors & Multiples") {
-//   part = 10;
-// } else if (localStorage["quiz-type"] === "Geometry") {
-//   part = 15;
-// } else if (localStorage["quiz-type"] === "Data & Statistics") {
-//   part = 25;
-// }
-showQuestion();
+if (part <= filteredQuizzes.length - 1) showQuestion();
+else showFinal()
+
 function showQuestion() {
   theQuestionPart.textContent = filteredQuizzes[part].question;
   theChoicesPart.querySelector("button:nth-child(1)").textContent =
@@ -1465,7 +1484,7 @@ function showFinal() {
     score: score,
     doneQuizzes: JSON.parse(sessionStorage.doneQuizzes),
   };
-  theUser.quizzes.push(theQuizzes);
+  theUser.quizzes.push(theQuizzes)
   localStorage.setItem("theUser", JSON.stringify(theUser));
 
   document.querySelector(".question-block").style.cssText =
@@ -1473,16 +1492,14 @@ function showFinal() {
   setTimeout(function () {
     document.querySelector(".question-block").innerHTML = `
       <h2>Quiz Finished!</h2>
-      <p>Your score: <strong>${theQuizzes.score} / ${
-      JSON.parse(sessionStorage.doneQuizzes).length
-    }</strong></p>
+      <p>Your score: <strong>${theQuizzes.score} / ${doneQuizzes.length}</strong></p>
     `;
     document.querySelector(".question-block").style.cssText =
       "transform: translatex(0);transition: all 1s ease-out;";
   }, 1000);
 }
 function saveQuestion(correct) {
-  let theQuestion = gradeQuizzes[part];
+  let theQuestion = filteredQuizzes[part];
   theQuestion.isCorrect = correct;
   theQuestion.userAnswer = localStorage.theAnswer;
   doneQuizzes.push(theQuestion);
@@ -1521,24 +1538,14 @@ document.querySelector(".next-btn").onclick = function () {
       saveQuestion(false);
     }
     localStorage.removeItem("theAnswer");
-    // let endIndex = 0;
-    // if (localStorage["quiz-type"] === "Whole Numbers") {
-    //   endIndex = wh.length - 1;
-    // } else if (localStorage["quiz-type"] === "Fractions & Decimals") {
-    //   endIndex = 5 + fr.length - 1;
-    // } else if (localStorage["quiz-type"] === "Factors & Multiples") {
-    //   endIndex = 10 + famu.length - 1;
-    // } else if (localStorage["quiz-type"] === "Geometry") {
-    //   endIndex = 15 + geo.length - 1;
-    // } else if (localStorage["quiz-type"] === "Data & Statistics") {
-    //   endIndex = 25 + da.length - 1;
-    // }
     setTimeout(function () {
       if (part === filteredQuizzes.length - 1) {
         showFinal();
+        sessionStorage.part = filteredQuizzes.length;
         return;
       }
       part++;
+      sessionStorage.part = part;
       changeQuestion();
     }, 1500);
     document.querySelectorAll(".choice").forEach((option) => {

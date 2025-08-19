@@ -37,10 +37,6 @@ function reviewQuestion(ques, i) {
         </div>
         <hr>
       `;
-
-  // questionContainer.classList.add('review-question')
-  // questionElement.classList.add('question')
-  // answerContainer.classList.add('answer')
-
-  // questionElement.textContent = `${i + 1}. ${question}`
 }
+console.log(theQuiz.topic)
+document.querySelector('topic').textContent = theQuiz.topic
