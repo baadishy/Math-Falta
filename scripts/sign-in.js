@@ -177,7 +177,7 @@ function createPopUp() {
 
   message.className = "message";
   message.style.cssText =
-    "border: 2px solid black; background-color: black; color: white; padding: 30px; font-size: 20px; font-family: Arial; max-width: 300px; min-width: 250px; border-radius: 20px; z-index: 10; position: fixed; top: 40%; left: 50%; transform: translate(-50%, -50%)";
+    "border: 2px solid black; background-color: black; color: white; padding: 30px; font-size: 20px; font-family: 'comic relief'; max-width: 300px; min-width: 250px; border-radius: 20px; z-index: 10; position: fixed; top: 40%; left: 50%; transform: translate(-50%, -50%)";
 
   message.append(rightMark, messageText);
   document.body.prepend(message);

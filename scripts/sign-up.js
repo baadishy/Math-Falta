@@ -254,7 +254,7 @@ function idcreator() {
 }
 function checkUser() {
   let theUser = users.filter(function (user) {
-    return username.value === user.username || password.value === user.password;
+    return username.value === user.username || password.value === user.password || email.value === user.email;
   });
   if (theUser.length === 0) return true
   else return false

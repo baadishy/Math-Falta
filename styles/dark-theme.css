@@ -113,3 +113,6 @@
     box-shadow: 0 2px 8px rgba(187, 134, 252, 0.1);
   }
 }
+* {
+  font-family: 'Comic Relief' !important;
+}

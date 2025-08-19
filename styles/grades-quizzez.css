@@ -218,9 +218,9 @@ li:hover a {
     font-size: 1em;
   }
   .logo-topleft {
-    width: 40px;
-    height: 40px;
-    top: 4px;
-    left: 4px;
+    width: 65px;
+    height: 65px;
+    top: 6px;
+    left: 6px;
   }
 }
