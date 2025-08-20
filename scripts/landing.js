@@ -19,3 +19,4 @@ function replaceUser() {
   localStorage.setItem('users', JSON.stringify(updatedUsers))
 }
 
+localStorage.clear()

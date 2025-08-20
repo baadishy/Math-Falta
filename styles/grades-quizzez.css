@@ -215,7 +215,10 @@ li:hover a {
     border-radius: 10px;
   }
   h1 {
-    font-size: 1em;
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.3em;
   }
   .logo-topleft {
     width: 65px;

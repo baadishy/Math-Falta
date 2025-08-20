@@ -10,7 +10,7 @@ fields[4].textContent = theUser.password;
 
 let quizzesPart = document.querySelector(".quizzes ul");
 
-if (theUser.quizzes) {
+if (theUser.quizzes.length) {
   theUser.quizzes.forEach((quiz) => {
     putQuiz(quiz);
   });
@@ -18,6 +18,7 @@ if (theUser.quizzes) {
   quizzesPart.append(document.createElement('li'))
   quizzesPart.querySelector('li').textContent = 'No Quizzes'
   quizzesPart.querySelector('li').style.pointerEvents = 'none'
+  quizzesPart.querySelector('li').style.color = 'gray'
 }
 
 function putQuiz(quiz) {

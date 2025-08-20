@@ -269,6 +269,10 @@ form.onsubmit = function (event) {
       parentNumber: parentNumber.value,
       grade: grade.value,
       id: idcreator(),
+      quizzes: [],
+      totalScore: function() {
+        this.quizzes.reduce((acc, current) => acc.score + current.score)
+      }
     };
     users.push(user);
     localStorage.setItem("users", JSON.stringify(users));

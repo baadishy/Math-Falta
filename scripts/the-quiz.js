@@ -1411,24 +1411,20 @@ let gradeQuizzes =
     ? grade10Quizzes
     : grade11Quizzes;
 let theUser = JSON.parse(localStorage.theUser);
-theUser.quizzes = []
 
 let filteredQuizzes = gradeQuizzes.filter((quiz) => {
   return quiz.topic === localStorage["quiz-type"];
 });
 console.log(filteredQuizzes);
 
-// let wh = gradeQuizzes.filter((quiz) => quiz.topic === "Whole Numbers");
-// let fr = gradeQuizzes.filter((quiz) => quiz.topic === "Fractions & Decimals");
-// let famu = gradeQuizzes.filter((quiz) => quiz.topic === "Factors & Multiples");
-// let geo = gradeQuizzes.filter((quiz) => quiz.topic === "Geometry");
-// let da = gradeQuizzes.filter((quiz) => quiz.topic === "Data & Statistics");
-
-document.querySelector(".links a").onclick = function () {
-  sessionStorage.removeItem("doneQuizzes");
-  sessionStorage.removeItem("part");
-  history.back();
-};
+document.querySelectorAll(".links a").forEach((option) => {
+  option.onclick = function () {
+    sessionStorage.removeItem("doneQuizzes");
+    sessionStorage.removeItem("part");
+    sessionStorage.removeItem("score");
+    history.back();
+  };
+});
 
 window.onload = function () {
   localStorage.removeItem("theAnswer");
@@ -1438,7 +1434,7 @@ let theQuestionPart = document.querySelector(".question strong");
 let theChoicesPart = document.querySelector(".choices");
 
 let part = sessionStorage.part || 0;
-let score = 0;
+let score = sessionStorage.score || 0;
 let doneQuizzes =
   sessionStorage.doneQuizzes === "undefined" ||
   sessionStorage.doneQuizzes === undefined
@@ -1446,7 +1442,7 @@ let doneQuizzes =
     : JSON.parse(sessionStorage.doneQuizzes);
 
 if (part <= filteredQuizzes.length - 1) showQuestion();
-else showFinal()
+else showFinal();
 
 function showQuestion() {
   theQuestionPart.textContent = filteredQuizzes[part].question;
@@ -1484,8 +1480,6 @@ function showFinal() {
     score: score,
     doneQuizzes: JSON.parse(sessionStorage.doneQuizzes),
   };
-  theUser.quizzes.push(theQuizzes)
-  localStorage.setItem("theUser", JSON.stringify(theUser));
 
   document.querySelector(".question-block").style.cssText =
     "transform: translatex(-250%);transition: all 1s ease-out;";
@@ -1493,15 +1487,20 @@ function showFinal() {
     document.querySelector(".question-block").innerHTML = `
       <h2>Quiz Finished!</h2>
       <p>Your score: <strong>${theQuizzes.score} / ${doneQuizzes.length}</strong></p>
-    `;
+      `;
     document.querySelector(".question-block").style.cssText =
       "transform: translatex(0);transition: all 1s ease-out;";
   }, 1000);
+  if (theUser.quizzes.filter((quiz) => quiz.topic === theQuizzes.topic).length)
+    return;
+  theUser.quizzes.push(theQuizzes);
+  localStorage.setItem("theUser", JSON.stringify(theUser));
 }
 function saveQuestion(correct) {
   let theQuestion = filteredQuizzes[part];
   theQuestion.isCorrect = correct;
   theQuestion.userAnswer = localStorage.theAnswer;
+  if (doneQuizzes.filter((question) => question.id === theQuestion.id)) return;
   doneQuizzes.push(theQuestion);
   sessionStorage.setItem("doneQuizzes", JSON.stringify(doneQuizzes));
 }
@@ -1527,6 +1526,7 @@ document.querySelector(".next-btn").onclick = function () {
     if (localStorage.theAnswer === filteredQuizzes[part].answer) {
       document.querySelector(".choosen").classList.add("correct");
       score++;
+      sessionStorage.score = score;
       saveQuestion(true);
     } else {
       document.querySelector(".choosen").classList.add("incorrect");

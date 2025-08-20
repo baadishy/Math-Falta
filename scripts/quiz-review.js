@@ -38,5 +38,4 @@ function reviewQuestion(ques, i) {
         <hr>
       `;
 }
-console.log(theQuiz.topic)
-document.querySelector('topic').textContent = theQuiz.topic
+document.querySelector('.topic').textContent = theQuiz.topic
