@@ -33,6 +33,7 @@ body {
   text-align: center;
   animation: pop-in 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55);
   max-width: 430px;
+  overflow-x: hidden;
 }
 
 @keyframes pop-in {

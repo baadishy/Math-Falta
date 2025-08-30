@@ -1,12 +1,16 @@
-let theUser = JSON.parse(localStorage.getItem("theUser"));
-
+let theUser = Object.assign({totalScore: function() {
+  return this.quizzes.reduce((acc,current) => acc + current.score, 0)
+}}, JSON.parse(localStorage.getItem("theUser")));
 let fields = document.getElementsByClassName("value");
+console.log(theUser)
+
 
 fields[0].textContent = theUser.username;
 fields[1].textContent = theUser.grade;
 fields[2].textContent = theUser.parentNumber;
 fields[3].textContent = theUser.email;
 fields[4].textContent = theUser.password;
+fields[5].textContent = theUser.totalScore()
 
 let quizzesPart = document.querySelector(".quizzes ul");
 

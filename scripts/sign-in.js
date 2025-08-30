@@ -5,6 +5,7 @@ let invalid = document.createElement("span");
 invalid.append(document.createTextNode("This is invalid"));
 invalid.style.cssText = "color: red;";
 let users = JSON.parse(localStorage.getItem("users")) || [];
+let adminPageName = "nnqgx218wbrlkph";
 
 window.onload = function () {
   username.focus();
@@ -35,11 +36,11 @@ function checkInputValidity() {
     element.onkeyup = function (event) {
       checkValidation(element);
     };
-    element.onblur = function () {
-      if (!checkValidation(element)) {
-        element.focus();
-      }
-    };
+    // element.onblur = function () {
+    //   if (!checkValidation(element)) {
+    //     element.focus();
+    //   }
+    // };
   });
 }
 
@@ -48,9 +49,10 @@ checkInputValidity();
 function checkUser() {
   let user = users.filter(
     (element) =>
-      element.username.trim() === username.value.trim() && element.password === password.value
+      element.username.trim() === username.value.trim() &&
+      element.password === password.value
   );
-  return user
+  return user;
 }
 
 function createPopUp() {
@@ -193,11 +195,16 @@ function createPopUp() {
 }
 
 form.onsubmit = function (event) {
-  let matchedUser = checkUser()
+  let matchedUser = checkUser();
   if (matchedUser.length !== 0) {
+    if (matchedUser[0].title === "admin") {
+      event.preventDefault();
+      location.href = `../html/admin/${adminPageName}.html`;
+      return;
+    }
     event.preventDefault();
     createPopUp();
-    localStorage.setItem('theUser', JSON.stringify(matchedUser[0]))
+    localStorage.setItem("theUser", JSON.stringify(matchedUser[0]));
     setTimeout(function () {
       location.assign("../html/landing.html");
     }, 3000);

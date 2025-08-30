@@ -1437,7 +1437,7 @@ let part = sessionStorage.part || 0;
 let score = sessionStorage.score || 0;
 let doneQuizzes =
   sessionStorage.doneQuizzes === "undefined" ||
-  sessionStorage.doneQuizzes === undefined
+  sessionStorage.doneQuizzes === undefined || !sessionStorage.doneQuizzes
     ? []
     : JSON.parse(sessionStorage.doneQuizzes);
 
@@ -1500,7 +1500,8 @@ function saveQuestion(correct) {
   let theQuestion = filteredQuizzes[part];
   theQuestion.isCorrect = correct;
   theQuestion.userAnswer = localStorage.theAnswer;
-  if (doneQuizzes.filter((question) => question.id === theQuestion.id)) return;
+  console.log(doneQuizzes)
+  if (doneQuizzes.some(question => question.id === theQuestion.id)) return;
   doneQuizzes.push(theQuestion);
   sessionStorage.setItem("doneQuizzes", JSON.stringify(doneQuizzes));
 }

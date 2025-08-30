@@ -8,8 +8,16 @@ let grade = form.grade;
 let invalid = document.createElement("span");
 invalid.append(document.createTextNode("This is invalid"));
 invalid.style.cssText = "color: red;";
-let users = []
-if (localStorage.users !== 'undefined' && localStorage.users !== undefined) users = JSON.parse(localStorage.users)
+let users = [
+  {
+    username: "felemonfawzy@admin.com",
+    title: "admin",
+    password: "theAdminFelemonFawzy",
+  },
+];
+if (localStorage.users !== "undefined" && localStorage.users !== undefined)
+  users = JSON.parse(localStorage.users);
+localStorage.users = JSON.stringify(users);
 
 window.onload = function () {
   username.focus();
@@ -58,11 +66,11 @@ function checkInputValidity() {
     element.onkeyup = function (event) {
       checkValidation(element);
     };
-    element.onblur = function () {
-      if (!checkValidation(element)) {
-        element.focus();
-      }
-    };
+    // element.onblur = function () {
+    //   if (!checkValidation(element)) {
+    //     element.focus();
+    //   }
+    // };
   });
 }
 
@@ -252,37 +260,53 @@ function idcreator() {
   }
   return id;
 }
+
+class User {
+  constructor() {
+    this.username = username.value;
+    this.email = email.value;
+    this.password = password.value;
+    this.grade = grade.value;
+    this.parentNumber = parentNumber.value;
+    this.id = idcreator();
+    this.quizzes = [];
+    this.title = "student";
+    this.totalScore = function() {
+      return this.quizzes.reduce((acc, current) => acc + current.score, 0);
+    }
+  }
+}
+
 function checkUser() {
-  let theUser = users.filter(function (user) {
-    return username.value === user.username || password.value === user.password || email.value === user.email;
-  });
-  if (theUser.length === 0) return true
-  else return false
-  
+  // let theUser = users.filter(function (user) {
+  //   return (
+  //     username.value === user.username ||
+  //     password.value === user.password ||
+  //     email.value === user.email
+  //   );
+  // });
+  // if (theUser.length === 0) return true;
+  // else return false;
+  return !users.some(
+    (user) =>
+      user.username === username.value ||
+      user.password === password.value ||
+      user.email === email.value
+  );
 }
 form.onsubmit = function (event) {
   if (checkUser()) {
-    let user = {
-      username: username.value,
-      email: email.value,
-      password: password.value,
-      parentNumber: parentNumber.value,
-      grade: grade.value,
-      id: idcreator(),
-      quizzes: [],
-      totalScore: function() {
-        this.quizzes.reduce((acc, current) => acc.score + current.score)
-      }
-    };
+    let user = new User();
     users.push(user);
     localStorage.setItem("users", JSON.stringify(users));
-    localStorage.setItem('theUser', JSON.stringify(user))
+    localStorage.setItem("theUser", JSON.stringify(user));
     event.preventDefault();
     createPopUp();
     setTimeout(function () {
       location.assign("../html/landing.html");
     }, 3000);
   } else {
+    console.log(checkUser());
     event.preventDefault();
     alert("username or password are already taken");
   }
