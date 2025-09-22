@@ -80,7 +80,7 @@ h1 {
     transition: color 0.3s;
 }
 
-form {
+.form {
     margin: 0 auto 18px auto;
     display: flex;
     flex-direction: column;
